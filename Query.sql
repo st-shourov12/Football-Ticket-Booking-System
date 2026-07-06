@@ -44,7 +44,7 @@ CREATE TABLE Bookings (
     seat_number VARCHAR(20) UNIQUE,
     payment_status VARCHAR(20) CHECK (payment_status IN ('Pending','Confirmed','Cancelled','Refunded')),
     total_cost INT CHECK(total_cost >= 0) NOT NULL
-    
+
 );
 
 
@@ -76,3 +76,19 @@ INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status
 (503, 2, 101, 'A-13', 'Confirmed', 150.00),
 (504, 2, 101, NULL, NULL, 150.00),
 (505, 3, 102, 'C-20', 'Pending', 120.00);
+
+
+
+
+
+
+-- =========================================================================
+-- Query 1: Retrieve all upcoming football matches belonging to the 'Champions League' where the match status is 'Available'.
+-- =========================================================================
+
+SELECT match_id, fixture, base_ticket_price FROM MATCHES 
+WHERE tournament_category = 'Champions League' AND match_status = 'Available'
+
+-- =========================================================================
+-- Query 1: Retrieve all upcoming football matches belonging to the 'Champions League' where the match status is 'Available'.
+-- =========================================================================
