@@ -190,4 +190,4 @@ ORDER BY base_ticket_price DESC LIMIT 2 OFFSET 1 ;
 
 This project is open source and available for learning and practice purposes.
 
-## As the last submission date is now, I make my code visible in Readme file
+## As the last submission date is knocking behind the door, I make my code visible in Readme file
