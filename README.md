@@ -48,6 +48,11 @@ All queries live in [`Query.sql`](./Query.sql).
 
 Retrieve all upcoming football matches belonging to the **Champions League** where the match status is **Available**.
 
+```
+SELECT match_id, fixture, base_ticket_price FROM MATCHES 
+WHERE tournament_category = 'Champions League' AND match_status = 'Available' ;
+```
+
 | match_id | fixture | base_ticket_price |
 |---|---|---|
 | 101 | Real Madrid vs Barcelona | 150 |
@@ -58,6 +63,11 @@ Retrieve all upcoming football matches belonging to the **Champions League** whe
 Search for all users whose full names start with `Tanvir` or contain the phrase `Haque` (case-insensitive).
 
 **Concepts used:** `LIKE`, `ILIKE`
+
+```
+SELECT user_id , full_name, email FROM Users 
+WHERE full_name ILIKE 'Tanvir%' OR full_name ILIKE '%Haque%' ;
+```
 
 | user_id | full_name | email |
 |---|---|---|
@@ -70,6 +80,11 @@ Retrieve all booking records where the payment status is missing (`NULL`), repla
 
 **Concepts used:** `IS NULL`, `COALESCE`
 
+```
+SELECT booking_id,	user_id, match_id, COALESCE(payment_status, 'Action Required') as systematic_status FROM Bookings 
+WHERE payment_status IS NULL ;
+```
+
 | booking_id | user_id | match_id | systematic_status |
 |---|---|---|---|
 | 504 | 2 | 101 | Action Required |
@@ -79,6 +94,12 @@ Retrieve all booking records where the payment status is missing (`NULL`), repla
 Retrieve match booking details along with the user's full name and the scheduled match fixture teams.
 
 **Concepts used:** `INNER JOIN`
+
+```
+SELECT b.booking_id, u.full_name, m.fixture, total_cost FROM Bookings AS b
+JOIN Users AS u ON u.user_id = b.user_id 
+JOIN Matches AS m ON b.match_id = m.match_id ;
+```
 
 | booking_id | full_name | fixture | total_cost |
 |---|---|---|---|
@@ -93,6 +114,11 @@ Retrieve match booking details along with the user's full name and the scheduled
 Display a comprehensive list of all users and their booking IDs, ensuring that fans who have never bought a ticket are still listed.
 
 **Concepts used:** `LEFT JOIN` / `FULL JOIN`
+
+```
+SELECT u.user_id,	u.full_name, booking_id FROM Users AS u 
+LEFT JOIN Bookings AS b ON b.user_id = u.user_id ;
+```
 
 | user_id | full_name | booking_id |
 |---|---|---|
@@ -109,6 +135,11 @@ Find all ticket bookings where the total cost is strictly higher than the averag
 
 **Concepts used:** Subquery, `AVG()`
 
+```
+SELECT booking_id, match_id, total_cost FROM Bookings 
+WHERE total_cost > (SELECT AVG(total_cost) FROM Bookings) ;
+```
+
 | booking_id | match_id | total_cost |
 |---|---|---|
 | 501 | 101 | 150 |
@@ -120,6 +151,11 @@ Find all ticket bookings where the total cost is strictly higher than the averag
 Retrieve the top 2 most expensive matches sorted by base ticket price, skipping the absolute highest premium match (skips *Real Madrid vs Barcelona* at 150).
 
 **Concepts used:** `ORDER BY`, `LIMIT`, `OFFSET`
+
+```
+SELECT match_id, fixture, base_ticket_price FROM Matches 
+ORDER BY base_ticket_price DESC LIMIT 2 OFFSET 1 ;
+```
 
 | match_id | fixture | base_ticket_price |
 |---|---|---|
@@ -153,3 +189,5 @@ Retrieve the top 2 most expensive matches sorted by base ticket price, skipping 
 ## 📄 License
 
 This project is open source and available for learning and practice purposes.
+
+## As the last submission date is knocking behind the door, I make my code visible in Readme file.
